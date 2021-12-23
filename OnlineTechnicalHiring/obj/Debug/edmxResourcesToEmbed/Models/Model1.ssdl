@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OnlineTechnicalProfessionalHiringSystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tblAdmin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="tblMessage">
+    <Key>
+      <PropertyRef Name="MID" />
+    </Key>
+    <Property Name="MID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MsgFromId" Type="int" />
+    <Property Name="MsgToId" Type="int" />
+    <Property Name="Msg" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="tblPost">
+    <Key>
+      <PropertyRef Name="PId" />
+    </Key>
+    <Property Name="PId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UId" Type="int" />
+    <Property Name="Post" Type="nvarchar" MaxLength="250" />
+    <Property Name="TType" Type="int" />
+    <Property Name="ApprovedTId" Type="int" />
+  </EntityType>
+  <EntityType Name="tblReview">
+    <Key>
+      <PropertyRef Name="RID" />
+    </Key>
+    <Property Name="RID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TID" Type="int" />
+    <Property Name="UID" Type="int" />
+    <Property Name="Review" Type="nvarchar" MaxLength="150" />
+    <Property Name="Rating" Type="int" />
+  </EntityType>
+  <EntityType Name="tblTechnician">
+    <Key>
+      <PropertyRef Name="TID" />
+    </Key>
+    <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gender" Type="bit" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="TType" Type="int" />
+    <Property Name="Latitude" Type="decimal" Precision="12" Scale="9" />
+    <Property Name="Longitude" Type="decimal" Precision="12" Scale="9" />
+    <Property Name="WorkCount" Type="int" Nullable="false" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="Password" Type="nvarchar" MaxLength="20" />
+    <Property Name="Photo" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="UId" />
+    </Key>
+    <Property Name="UId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nchar" MaxLength="10" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsApproved" Type="bit" />
+    <Property Name="Latitude" Type="decimal" Precision="12" Scale="9" />
+    <Property Name="Longitude" Type="decimal" Precision="12" Scale="9" />
+    <Property Name="Photo" Type="varbinary(max)" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="Province" Type="nvarchar" MaxLength="50" />
+    <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="District" Type="nvarchar" MaxLength="50" />
+    <Property Name="Locality" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_tblPost_tblTechnician">
+    <End Role="tblTechnician" Type="Self.tblTechnician" Multiplicity="0..1" />
+    <End Role="tblPost" Type="Self.tblPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTechnician">
+        <PropertyRef Name="TID" />
+      </Principal>
+      <Dependent Role="tblPost">
+        <PropertyRef Name="ApprovedTId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblPost_tblUser">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+    <End Role="tblPost" Type="Self.tblPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="tblPost">
+        <PropertyRef Name="UId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblReview_tblTechnician">
+    <End Role="tblTechnician" Type="Self.tblTechnician" Multiplicity="0..1" />
+    <End Role="tblReview" Type="Self.tblReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTechnician">
+        <PropertyRef Name="TID" />
+      </Principal>
+      <Dependent Role="tblReview">
+        <PropertyRef Name="TID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblReview_tblUser">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+    <End Role="tblReview" Type="Self.tblReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="tblReview">
+        <PropertyRef Name="UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OnlineTechnicalProfessionalHiringSystemModelStoreContainer">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblAdmin" EntityType="Self.tblAdmin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblMessage" EntityType="Self.tblMessage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblPost" EntityType="Self.tblPost" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblReview" EntityType="Self.tblReview" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblTechnician" EntityType="Self.tblTechnician" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblUser" EntityType="Self.tblUser" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tblPost_tblTechnician" Association="Self.FK_tblPost_tblTechnician">
+      <End Role="tblTechnician" EntitySet="tblTechnician" />
+      <End Role="tblPost" EntitySet="tblPost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblPost_tblUser" Association="Self.FK_tblPost_tblUser">
+      <End Role="tblUser" EntitySet="tblUser" />
+      <End Role="tblPost" EntitySet="tblPost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblReview_tblTechnician" Association="Self.FK_tblReview_tblTechnician">
+      <End Role="tblTechnician" EntitySet="tblTechnician" />
+      <End Role="tblReview" EntitySet="tblReview" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblReview_tblUser" Association="Self.FK_tblReview_tblUser">
+      <End Role="tblUser" EntitySet="tblUser" />
+      <End Role="tblReview" EntitySet="tblReview" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

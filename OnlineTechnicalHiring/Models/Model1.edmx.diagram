@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="240c5fb5feeb46b5b25196ab7815d130" Name="Diagram1">
+        <EntityTypeShape EntityType="OnlineTechnicalProfessionalHiringSystemModel.sysdiagram" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTechnicalProfessionalHiringSystemModel.tblAdmin" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTechnicalProfessionalHiringSystemModel.tblMessage" Width="1.5" PointX="6.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTechnicalProfessionalHiringSystemModel.tblPost" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTechnicalProfessionalHiringSystemModel.tblReview" Width="1.5" PointX="6" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTechnicalProfessionalHiringSystemModel.tblTechnician" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OnlineTechnicalProfessionalHiringSystemModel.tblUser" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="OnlineTechnicalProfessionalHiringSystemModel.FK_tblPost_tblTechnician" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTechnicalProfessionalHiringSystemModel.FK_tblPost_tblUser" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTechnicalProfessionalHiringSystemModel.FK_tblReview_tblTechnician" ManuallyRouted="false" />
+        <AssociationConnector Association="OnlineTechnicalProfessionalHiringSystemModel.FK_tblReview_tblUser" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

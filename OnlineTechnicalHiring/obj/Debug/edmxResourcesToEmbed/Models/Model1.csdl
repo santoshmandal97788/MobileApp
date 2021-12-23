@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OnlineTechnicalProfessionalHiringSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblAdmin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblMessage">
+    <Key>
+      <PropertyRef Name="MID" />
+    </Key>
+    <Property Name="MID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MsgFromId" Type="Int32" />
+    <Property Name="MsgToId" Type="Int32" />
+    <Property Name="Msg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="tblPost">
+    <Key>
+      <PropertyRef Name="PId" />
+    </Key>
+    <Property Name="PId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UId" Type="Int32" />
+    <Property Name="Post" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="TType" Type="Int32" />
+    <Property Name="ApprovedTId" Type="Int32" />
+    <NavigationProperty Name="tblTechnician" Relationship="Self.FK_tblPost_tblTechnician" FromRole="tblPost" ToRole="tblTechnician" />
+    <NavigationProperty Name="tblUser" Relationship="Self.FK_tblPost_tblUser" FromRole="tblPost" ToRole="tblUser" />
+  </EntityType>
+  <EntityType Name="tblReview">
+    <Key>
+      <PropertyRef Name="RID" />
+    </Key>
+    <Property Name="RID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TID" Type="Int32" />
+    <Property Name="UID" Type="Int32" />
+    <Property Name="Review" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Rating" Type="Int32" />
+    <NavigationProperty Name="tblTechnician" Relationship="Self.FK_tblReview_tblTechnician" FromRole="tblReview" ToRole="tblTechnician" />
+    <NavigationProperty Name="tblUser" Relationship="Self.FK_tblReview_tblUser" FromRole="tblReview" ToRole="tblUser" />
+  </EntityType>
+  <EntityType Name="tblTechnician">
+    <Key>
+      <PropertyRef Name="TID" />
+    </Key>
+    <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="Boolean" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TType" Type="Int32" />
+    <Property Name="Latitude" Type="Decimal" Precision="12" Scale="9" />
+    <Property Name="Longitude" Type="Decimal" Precision="12" Scale="9" />
+    <Property Name="WorkCount" Type="Int32" Nullable="false" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="tblPosts" Relationship="Self.FK_tblPost_tblTechnician" FromRole="tblTechnician" ToRole="tblPost" />
+    <NavigationProperty Name="tblReviews" Relationship="Self.FK_tblReview_tblTechnician" FromRole="tblTechnician" ToRole="tblReview" />
+  </EntityType>
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="UId" />
+    </Key>
+    <Property Name="UId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsApproved" Type="Boolean" />
+    <Property Name="Latitude" Type="Decimal" Precision="12" Scale="9" />
+    <Property Name="Longitude" Type="Decimal" Precision="12" Scale="9" />
+    <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Locality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblPosts" Relationship="Self.FK_tblPost_tblUser" FromRole="tblUser" ToRole="tblPost" />
+    <NavigationProperty Name="tblReviews" Relationship="Self.FK_tblReview_tblUser" FromRole="tblUser" ToRole="tblReview" />
+  </EntityType>
+  <Association Name="FK_tblPost_tblTechnician">
+    <End Role="tblTechnician" Type="Self.tblTechnician" Multiplicity="0..1" />
+    <End Role="tblPost" Type="Self.tblPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTechnician">
+        <PropertyRef Name="TID" />
+      </Principal>
+      <Dependent Role="tblPost">
+        <PropertyRef Name="ApprovedTId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblPost_tblUser">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+    <End Role="tblPost" Type="Self.tblPost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="tblPost">
+        <PropertyRef Name="UId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblReview_tblTechnician">
+    <End Role="tblTechnician" Type="Self.tblTechnician" Multiplicity="0..1" />
+    <End Role="tblReview" Type="Self.tblReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblTechnician">
+        <PropertyRef Name="TID" />
+      </Principal>
+      <Dependent Role="tblReview">
+        <PropertyRef Name="TID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblReview_tblUser">
+    <End Role="tblUser" Type="Self.tblUser" Multiplicity="0..1" />
+    <End Role="tblReview" Type="Self.tblReview" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UId" />
+      </Principal>
+      <Dependent Role="tblReview">
+        <PropertyRef Name="UID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OnlineTechnicalProfessionalHiringSystemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="tblAdmins" EntityType="Self.tblAdmin" />
+    <EntitySet Name="tblMessages" EntityType="Self.tblMessage" />
+    <EntitySet Name="tblPosts" EntityType="Self.tblPost" />
+    <EntitySet Name="tblReviews" EntityType="Self.tblReview" />
+    <EntitySet Name="tblTechnicians" EntityType="Self.tblTechnician" />
+    <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+    <AssociationSet Name="FK_tblPost_tblTechnician" Association="Self.FK_tblPost_tblTechnician">
+      <End Role="tblTechnician" EntitySet="tblTechnicians" />
+      <End Role="tblPost" EntitySet="tblPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblPost_tblUser" Association="Self.FK_tblPost_tblUser">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblPost" EntitySet="tblPosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblReview_tblTechnician" Association="Self.FK_tblReview_tblTechnician">
+      <End Role="tblTechnician" EntitySet="tblTechnicians" />
+      <End Role="tblReview" EntitySet="tblReviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblReview_tblUser" Association="Self.FK_tblReview_tblUser">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblReview" EntitySet="tblReviews" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
