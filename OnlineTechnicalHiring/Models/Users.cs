@@ -15,5 +15,9 @@ namespace OnlineTechnicalHiring.Models
         public string Address { get; set; }
         public byte[] Photo { get; set; }
         public string Role { get; set; }
+        public int TType { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+
     }
 }

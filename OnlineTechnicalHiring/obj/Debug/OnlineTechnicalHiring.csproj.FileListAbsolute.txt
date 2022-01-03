@@ -98,6 +98,6 @@ E:\OnlineTechnicalProfessional\OnlineTechnicalHiring\OnlineTechnicalHiring\bin\M
 E:\OnlineTechnicalProfessional\OnlineTechnicalHiring\OnlineTechnicalHiring\bin\Microsoft.Owin.Security.OAuth.xml
 E:\OnlineTechnicalProfessional\OnlineTechnicalHiring\OnlineTechnicalHiring\bin\Microsoft.Owin.Host.SystemWeb.dll
 E:\OnlineTechnicalProfessional\OnlineTechnicalHiring\OnlineTechnicalHiring\bin\Microsoft.Owin.Host.SystemWeb.xml
-E:\OnlineTechnicalProfessional\OnlineTechnicalHiring\OnlineTechnicalHiring\obj\Debug\OnlineTechnicalHiring.csprojAssemblyReference.cache
 E:\OnlineTechnicalProfessional\OnlineTechnicalHiring\OnlineTechnicalHiring\bin\System.Diagnostics.DiagnosticSource.dll
 E:\OnlineTechnicalProfessional\OnlineTechnicalHiring\OnlineTechnicalHiring\bin\System.Diagnostics.DiagnosticSource.xml
+E:\OnlineTechnicalProfessional\OnlineTechnicalHiring\OnlineTechnicalHiring\obj\Debug\OnlineTechnicalHiring.csproj.AssemblyReference.cache

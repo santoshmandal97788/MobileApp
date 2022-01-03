@@ -60,7 +60,7 @@
           <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="100" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="Gender" Type="bit" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
           <Property Name="Address" Type="nvarchar" MaxLength="100" />
           <Property Name="TType" Type="int" />
@@ -79,18 +79,13 @@
           <Property Name="FullName" Type="nvarchar" MaxLength="50" />
           <Property Name="Gender" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="PhoneNumber" Type="nchar" MaxLength="10" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="IsApproved" Type="bit" />
           <Property Name="Latitude" Type="decimal" Precision="12" Scale="9" />
           <Property Name="Longitude" Type="decimal" Precision="12" Scale="9" />
           <Property Name="Photo" Type="varbinary(max)" />
-          <Property Name="Country" Type="nvarchar" MaxLength="50" />
-          <Property Name="Province" Type="nvarchar" MaxLength="50" />
-          <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="District" Type="nvarchar" MaxLength="50" />
-          <Property Name="Locality" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_tblPost_tblTechnician">
           <End Role="tblTechnician" Type="Self.tblTechnician" Multiplicity="0..1" />
@@ -229,7 +224,7 @@
           <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="Boolean" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="TType" Type="Int32" />
@@ -250,18 +245,13 @@
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsApproved" Type="Boolean" />
           <Property Name="Latitude" Type="Decimal" Precision="12" Scale="9" />
           <Property Name="Longitude" Type="Decimal" Precision="12" Scale="9" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Locality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblPosts" Relationship="Self.FK_tblPost_tblUser" FromRole="tblUser" ToRole="tblPost" />
           <NavigationProperty Name="tblReviews" Relationship="Self.FK_tblReview_tblUser" FromRole="tblUser" ToRole="tblReview" />
         </EntityType>
@@ -430,11 +420,6 @@
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Province" ColumnName="Province" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="District" ColumnName="District" />
-                <ScalarProperty Name="Locality" ColumnName="Locality" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

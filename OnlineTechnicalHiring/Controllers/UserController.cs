@@ -10,7 +10,8 @@ using System.Web.Http;
 using System.Web.Http.Results;
 using System.Web.Mvc;
 using System.Device.Location;
-
+using System.Web;
+using System.IO;
 
 namespace OnlineTechnicalHiring.Controllers
 {
@@ -18,10 +19,10 @@ namespace OnlineTechnicalHiring.Controllers
     {
         UserBLL _bll = new UserBLL();
         TechnicianBll _techBLL = new TechnicianBll();
-        [AuthorizeAttribute]
-        [Authorize(Roles = "user")]
-        [System.Web.Http.Route("api/User/List")]
-        public List<UserViewModel> GetAll()
+        //[AuthorizeAttribute]
+        //[Authorize(Roles = "user")]
+        [System.Web.Http.Route("api/User/GetAllUser")]
+        public List<UserViewModel> GetAllUsers()
         {
             return _bll.ListAll();
         }
@@ -65,7 +66,12 @@ namespace OnlineTechnicalHiring.Controllers
             };
         }
 
-
+        [System.Web.Http.Route("api/User/GetClientbyId")]
+        public UserViewModel GetClientById(int id)
+        {
+            var user = _bll.GetUserById(id);
+            return user;
+        }
 
         public UserViewModel Get(int ID)
         {
@@ -79,80 +85,163 @@ namespace OnlineTechnicalHiring.Controllers
         }
 
         [System.Web.Http.Route("api/User/Register")]
-        public HttpResponseMessage Post([Bind(Include = "Email,Model")] UserViewModel uvm)
+        public HttpResponseMessage Post()
         {
-            OnlineTechnicalProfessionalHiringSystemEntities db = new OnlineTechnicalProfessionalHiringSystemEntities();
-            string message = "User Added Successfully";
-            bool isexists = _bll.EmailExists(uvm.Email, uvm.PhoneNumber);
-            if (isexists)
+            //OnlineTechnicalProfessionalHiringSystemEntities db = new OnlineTechnicalProfessionalHiringSystemEntities();
+            //string message = "User Added Successfully";
+            ////bool isexists = _bll.EmailExists(uvm.Email, uvm.PhoneNumber);
+            ////if (isexists)
+            ////{
+            ////    ModelState.AddModelError("Email", "Email Already Exist");
+            ////    ModelState.AddModelError("PhoneNumber", "PhoneNumber Already Exist");
+            ////}
+            //if (ModelState.IsValid)
+            //{
+            //    _bll.Add(uvm);
+            //    //stuDB.SendSMS();
+
+            //    tblUser tb = db.tblUsers.Where(x => x.Email == uvm.Email).FirstOrDefault();
+            //    if (tb != null)
+            //    {
+            //        //_bll.SendEMail(tb.UId);
+            //    }
+
+            //    //tblStudent tb1 = db.tblStudents.Where(x => x.Phone == svm.Phone).FirstOrDefault();
+            //    //if (tb1 != null)
+            //    //{
+            //    //    stuDB.SendSMS(tb1.Phone);
+            //    //}
+
+            //    return Request.CreateResponse(HttpStatusCode.OK, message);
+            //}
+            //else
+            //{
+            //    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            //}
+            //Read the File data from Request.Form collection.
+            HttpPostedFile postedFile = HttpContext.Current.Request.Files[0];
+            //Convert the File data to Byte Array.
+            byte[] bytes;
+            using (BinaryReader br = new BinaryReader(postedFile.InputStream))
             {
-                ModelState.AddModelError("Email", "Email Already Exist");
-                ModelState.AddModelError("PhoneNumber", "PhoneNumber Already Exist");
+                bytes = br.ReadBytes(postedFile.ContentLength);
             }
+            string message = "User Added Successfully";
+            var FullName = HttpContext.Current.Request.Params["FullName"];
+            var Gender = HttpContext.Current.Request.Params["Gender"];
+            var Email = HttpContext.Current.Request.Params["Email"];
+            var PhoneNumber = HttpContext.Current.Request.Params["PhoneNumber"];
+            var Address = HttpContext.Current.Request.Params["Address"];
+            var Password = HttpContext.Current.Request.Params["Password"];
+            var Latitude = HttpContext.Current.Request.Params["Latitude"];
+            var Longitude = HttpContext.Current.Request.Params["Latitude"];
+            //Insert the File to Database Table.
+            OnlineTechnicalProfessionalHiringSystemEntities _db = new OnlineTechnicalProfessionalHiringSystemEntities();
             if (ModelState.IsValid)
             {
-                _bll.Add(uvm);
-                //stuDB.SendSMS();
-
-                tblUser tb = db.tblUsers.Where(x => x.Email == uvm.Email).FirstOrDefault();
-                if (tb != null)
-                {
-                    //_bll.SendEMail(tb.UId);
-                }
-
-                //tblStudent tb1 = db.tblStudents.Where(x => x.Phone == svm.Phone).FirstOrDefault();
-                //if (tb1 != null)
-                //{
-                //    stuDB.SendSMS(tb1.Phone);
-                //}
-
+                tblUser tb = new tblUser();
+                tb.FullName = FullName;
+                tb.Gender = Gender;
+                tb.Email = Email;
+                tb.PhoneNumber = PhoneNumber;
+                tb.Address = Address;
+                tb.Password = Password;
+                tb.IsApproved = true;
+                tb.Latitude = Convert.ToDecimal(Latitude);
+                tb.Longitude = Convert.ToDecimal(Longitude);
+                tb.Photo = bytes;
+                _db.tblUsers.Add(tb);
+                _db.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, message);
             }
             else
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+
             }
 
         }
 
-
-        public HttpResponseMessage Put([Bind(Include = "Email,Model")] UserViewModel uvm)
+        [System.Web.Http.Route("api/User/Update")]
+        public HttpResponseMessage Put()
         {
-            OnlineTechnicalProfessionalHiringSystemEntities db = new OnlineTechnicalProfessionalHiringSystemEntities();
-            var user = _bll.ListAll().Find(t => t.UId.Equals(uvm.UId));
-            string message = "User Updated Successfully";
-            tblUser tb = db.tblUsers.Where(s => s.UId == uvm.UId).FirstOrDefault();
-            bool isexists = _bll.EmailExists(uvm.Email, uvm.PhoneNumber);
-            if (isexists)
-            {
-                if (tb.Email == uvm.Email)
-                {
-                    if (ModelState.IsValid)
-                    {
-                        _bll.Update(uvm);
-                        return Request.CreateResponse(HttpStatusCode.OK, message);
-                    }
-                    else
-                    {
-                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("Email", "Email Already Exist");
-                    ModelState.AddModelError("PhoneNumber", "PhoneNumber Already Exist");
-                }
-            }
+            //OnlineTechnicalProfessionalHiringSystemEntities db = new OnlineTechnicalProfessionalHiringSystemEntities();
+            //var user = _bll.ListAll().Find(t => t.UId.Equals(uvm.UId));
+            //string message = "User Updated Successfully";
+            //tblUser tb = db.tblUsers.Where(s => s.UId == uvm.UId).FirstOrDefault();
+            //bool isexists = _bll.EmailExists(uvm.Email, uvm.PhoneNumber);
+            //if (isexists)
+            //{
+            //    if (tb.Email == uvm.Email)
+            //    {
+            //        if (ModelState.IsValid)
+            //        {
+            //            _bll.Update(uvm);
+            //            return Request.CreateResponse(HttpStatusCode.OK, message);
+            //        }
+            //        else
+            //        {
+            //            return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        ModelState.AddModelError("Email", "Email Already Exist");
+            //        ModelState.AddModelError("PhoneNumber", "PhoneNumber Already Exist");
+            //    }
+            //}
 
+            //if (ModelState.IsValid)
+            //{
+            //    _bll.Update(uvm);
+            //    return Request.CreateResponse(HttpStatusCode.OK, message);
+            //}
+            //else
+            //{
+            //    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            //}
+
+            HttpPostedFile postedFile = HttpContext.Current.Request.Files[0];
+            //Convert the File data to Byte Array.
+            byte[] bytes;
+            using (BinaryReader br = new BinaryReader(postedFile.InputStream))
+            {
+                bytes = br.ReadBytes(postedFile.ContentLength);
+            }
+            string message = "User Updated Successfully";
+            var Id = Convert.ToInt32(HttpContext.Current.Request.Params["Id"]);
+            var FullName = HttpContext.Current.Request.Params["FullName"];
+            var Gender = HttpContext.Current.Request.Params["Gender"];
+            var Email = HttpContext.Current.Request.Params["Email"];
+            var PhoneNumber = HttpContext.Current.Request.Params["PhoneNumber"];
+            var Address = HttpContext.Current.Request.Params["Address"];
+            var Password = HttpContext.Current.Request.Params["Password"];
+            var Latitude = HttpContext.Current.Request.Params["Latitude"];
+            var Longitude = HttpContext.Current.Request.Params["Latitude"];
+            OnlineTechnicalProfessionalHiringSystemEntities _db = new OnlineTechnicalProfessionalHiringSystemEntities();
+
+            tblUser tb = _db.tblUsers.Where(a => a.UId == Id).FirstOrDefault();
+            //Insert the File to Database Table.
             if (ModelState.IsValid)
             {
-                _bll.Update(uvm);
+               
+                tb.FullName = FullName;
+                tb.Gender = Gender;
+                tb.Email = Email;
+                tb.PhoneNumber = PhoneNumber;
+                tb.Address = Address;
+                tb.Latitude = Convert.ToDecimal(Latitude);
+                tb.Longitude = Convert.ToDecimal(Longitude);
+                tb.Photo = bytes;
+                _db.SaveChanges();
                 return Request.CreateResponse(HttpStatusCode.OK, message);
             }
             else
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+
             }
+
 
         }
 
@@ -208,7 +297,7 @@ namespace OnlineTechnicalHiring.Controllers
                 if (distanceBetween <=5000)
                 {
                     
-                    lst.Add(new TechnicianDetails() {  Name = item.FullName,Latitude=(double)item.Latitude,Longitude=(double)item.Longitude , Gender=item.Gender==true? "Male":"Female", Phone = item.PhoneNumber, Address = item.Address, DisatanceAway=(float)distanceBetween/1000, Technician="Electrician" });
+                    lst.Add(new TechnicianDetails() {  Name = item.FullName,Latitude=(double)item.Latitude,Longitude=(double)item.Longitude , Gender=item.Gender, Phone = item.PhoneNumber, Address = item.Address, DisatanceAway=(float)distanceBetween/1000, Technician="Electrician" });
 
                 }
             }
@@ -227,9 +316,9 @@ namespace OnlineTechnicalHiring.Controllers
 
             ClaimsPrincipal principal = Request.GetRequestContext().Principal as ClaimsPrincipal;
             var id = principal.Claims.ToList();
-            //var Id = id[1];
-            //int userId = Convert.ToInt32(Id.Value);
-            int userId = 3;
+            var Id = id[1];
+            int userId = Convert.ToInt32(Id.Value);
+           // int userId = 3;
             var user = _bll.ListAll().Find(t => t.UId.Equals(userId));
             GeoCoordinate pin1 = new GeoCoordinate((double)user.Latitude, (double)user.Longitude);
             var electricianlist = _techBLL.ListAllElectrician();
@@ -241,7 +330,7 @@ namespace OnlineTechnicalHiring.Controllers
                 if (distanceBetween <= 5000)
                 {
 
-                    lst.Add(new TechnicianDetails() {Id=item.TID, Name = item.FullName, Latitude = (double)item.Latitude, Longitude = (double)item.Longitude, Gender = item.Gender == true ? "Male" : "Female", Phone = item.PhoneNumber, Address = item.Address, DisatanceAway = (float)distanceBetween / 1000, Technician = "Electrician" });
+                    lst.Add(new TechnicianDetails() {Id=item.TID, Name = item.FullName, Latitude = (double)item.Latitude, Longitude = (double)item.Longitude, Gender = item.Gender, Phone = item.PhoneNumber, Address = item.Address, DisatanceAway = (float)distanceBetween / 1000, Technician = "Electrician" });
 
                 }
             }
@@ -255,9 +344,9 @@ namespace OnlineTechnicalHiring.Controllers
 
             ClaimsPrincipal principal = Request.GetRequestContext().Principal as ClaimsPrincipal;
             var id = principal.Claims.ToList();
-            //var Id = id[1];
-            //int userId = Convert.ToInt32(Id.Value);
-            int userId = 3;
+            var Id = id[1];
+            int userId = Convert.ToInt32(Id.Value);
+            //int userId = 3;
             var user = _bll.ListAll().Find(t => t.UId.Equals(userId));
             GeoCoordinate pin1 = new GeoCoordinate((double)user.Latitude, (double)user.Longitude);
             var plumberList = _techBLL.ListAllPlumber();
@@ -269,7 +358,7 @@ namespace OnlineTechnicalHiring.Controllers
                 if (distanceBetween <= 5000)
                 {
 
-                    lst.Add(new TechnicianDetails() { Id=item.TID, Name = item.FullName, Latitude = (double)item.Latitude, Longitude = (double)item.Longitude, Gender = item.Gender == true ? "Male" : "Female", Phone = item.PhoneNumber, Address = item.Address, DisatanceAway = (float)distanceBetween / 1000, Technician = "Electrician" });
+                    lst.Add(new TechnicianDetails() { Id=item.TID, Name = item.FullName, Latitude = (double)item.Latitude, Longitude = (double)item.Longitude, Gender = item.Gender, Phone = item.PhoneNumber, Address = item.Address, DisatanceAway = (float)distanceBetween / 1000, Technician = "Electrician" });
 
                 }
             }
@@ -295,7 +384,7 @@ namespace OnlineTechnicalHiring.Controllers
                 u.Email = user.Email;
                 u.PhoneNumber = user.PhoneNumber;
                 u.Gender = user.Gender;
-
+                u.Address = user.Address;
                 u.Photo = user.Photo;
                 u.Role = "user";
             }
@@ -306,15 +395,12 @@ namespace OnlineTechnicalHiring.Controllers
                 u.FullName = tech.FullName;
                 u.Email = tech.Email;
                 u.PhoneNumber = tech.PhoneNumber;
-                if (tech.Gender == true)
-                {
-                    u.Gender = "Male";
-                }
-                else
-                {
-                    u.Gender = "Female";
-                }
+                u.Gender = tech.Gender;
+                u.Address = tech.Address;
+                u.TType = (int)tech.TType;
                 u.Photo = tech.Photo;
+                u.Latitude = (double)tech.Latitude;
+                u.Longitude = (double)tech.Longitude;
                 u.Role = "technicians";
             }
          

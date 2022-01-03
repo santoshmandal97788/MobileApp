@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace OnlineTechnicalHiring.Models
         public int UId { get; set; }
 
         [Required(ErrorMessage = "Full Name is Required")]
+        [JsonProperty("FullName")]
         public string FullName { get; set; }
 
         [Required(ErrorMessage = "Gender is Required")]
@@ -32,12 +34,10 @@ namespace OnlineTechnicalHiring.Models
         public Nullable<bool> IsApproved { get; set; }
         public Nullable<decimal> Latitude { get; set; }
         public Nullable<decimal> Longitude { get; set; }
-        public byte[] Photo { get; set; }
 
-        public string Country { get; set; }
-        public string Province { get; set; }
-        public string PostalCode { get; set; }
-        public string District { get; set; }
-        public string Locality { get; set; }
+        [JsonProperty("Photo")]
+        public byte[] Photo { get; set; }
+        public int TType { get; set; }
+
     }
 }

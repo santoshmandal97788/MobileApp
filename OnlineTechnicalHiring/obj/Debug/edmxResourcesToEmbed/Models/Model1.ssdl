@@ -55,7 +55,7 @@
     <Property Name="TID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FullName" Type="nvarchar" MaxLength="100" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
-    <Property Name="Gender" Type="bit" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="50" />
     <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" />
     <Property Name="Address" Type="nvarchar" MaxLength="100" />
     <Property Name="TType" Type="int" />
@@ -74,18 +74,13 @@
     <Property Name="FullName" Type="nvarchar" MaxLength="50" />
     <Property Name="Gender" Type="nvarchar" MaxLength="50" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
-    <Property Name="PhoneNumber" Type="nchar" MaxLength="10" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
     <Property Name="Address" Type="nvarchar" MaxLength="50" />
     <Property Name="Password" Type="nvarchar" MaxLength="50" />
     <Property Name="IsApproved" Type="bit" />
     <Property Name="Latitude" Type="decimal" Precision="12" Scale="9" />
     <Property Name="Longitude" Type="decimal" Precision="12" Scale="9" />
     <Property Name="Photo" Type="varbinary(max)" />
-    <Property Name="Country" Type="nvarchar" MaxLength="50" />
-    <Property Name="Province" Type="nvarchar" MaxLength="50" />
-    <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
-    <Property Name="District" Type="nvarchar" MaxLength="50" />
-    <Property Name="Locality" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK_tblPost_tblTechnician">
     <End Role="tblTechnician" Type="Self.tblTechnician" Multiplicity="0..1" />

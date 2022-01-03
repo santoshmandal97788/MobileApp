@@ -87,11 +87,6 @@
           <ScalarProperty Name="Latitude" ColumnName="Latitude" />
           <ScalarProperty Name="Longitude" ColumnName="Longitude" />
           <ScalarProperty Name="Photo" ColumnName="Photo" />
-          <ScalarProperty Name="Country" ColumnName="Country" />
-          <ScalarProperty Name="Province" ColumnName="Province" />
-          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-          <ScalarProperty Name="District" ColumnName="District" />
-          <ScalarProperty Name="Locality" ColumnName="Locality" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

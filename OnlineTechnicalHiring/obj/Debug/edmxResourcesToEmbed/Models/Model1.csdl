@@ -59,7 +59,7 @@
     <Property Name="TID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Gender" Type="Boolean" />
+    <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
     <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="TType" Type="Int32" />
@@ -80,18 +80,13 @@
     <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="IsApproved" Type="Boolean" />
     <Property Name="Latitude" Type="Decimal" Precision="12" Scale="9" />
     <Property Name="Longitude" Type="Decimal" Precision="12" Scale="9" />
     <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Province" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Locality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="tblPosts" Relationship="Self.FK_tblPost_tblUser" FromRole="tblUser" ToRole="tblPost" />
     <NavigationProperty Name="tblReviews" Relationship="Self.FK_tblReview_tblUser" FromRole="tblUser" ToRole="tblReview" />
   </EntityType>

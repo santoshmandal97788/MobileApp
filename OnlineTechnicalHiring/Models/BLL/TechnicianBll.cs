@@ -57,7 +57,7 @@ namespace OnlineTechnicalHiring.Models.BLL
                 var users = _db.tblTechnicians.ToList();
                 foreach (var item in users)
                 {
-                    lstAll.Add(new TechnicianViewModel() { TID = item.TID, Gender = item.Gender, Latitude = item.Latitude, Longitude = item.Longitude, PhoneNumber = item.PhoneNumber, Photo = item.Photo, Email = item.Email, FullName = item.FullName, Address = item.Address });
+                    lstAll.Add(new TechnicianViewModel() { TID = item.TID, Gender = item.Gender, Latitude = item.Latitude, Longitude = item.Longitude, PhoneNumber = item.PhoneNumber, Photo = item.Photo, Email = item.Email, FullName = item.FullName, Address = item.Address, TType=item.TType });
                 }
                 return lstAll;
             }
@@ -102,6 +102,7 @@ namespace OnlineTechnicalHiring.Models.BLL
                 tb.Latitude = uvm.Latitude;
                 tb.Longitude = uvm.Longitude;
                 tb.Photo = uvm.Photo;
+                tb.WorkCount = 0;
                 //tb.Country = uvm.Country;
                 //tb.Province = uvm.Province;
                 //tb.PostalCode = uvm.PostalCode;

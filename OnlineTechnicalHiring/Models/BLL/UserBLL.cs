@@ -63,11 +63,7 @@ namespace OnlineTechnicalHiring.Models.BLL
                 tb.Latitude = uvm.Latitude;
                 tb.Longitude = uvm.Longitude;
                 tb.Photo = uvm.Photo;
-                tb.Country = uvm.Country;
-                tb.Province = uvm.Province;
-                tb.PostalCode = uvm.PostalCode;
-                tb.District = uvm.District;
-                tb.Locality = uvm.Locality;
+              
 
                 _db.tblUsers.Add(tb);
                 return _db.SaveChanges();

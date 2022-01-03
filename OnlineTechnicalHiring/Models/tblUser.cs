@@ -32,11 +32,6 @@ namespace OnlineTechnicalHiring.Models
         public Nullable<decimal> Latitude { get; set; }
         public Nullable<decimal> Longitude { get; set; }
         public byte[] Photo { get; set; }
-        public string Country { get; set; }
-        public string Province { get; set; }
-        public string PostalCode { get; set; }
-        public string District { get; set; }
-        public string Locality { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPost> tblPosts { get; set; }
